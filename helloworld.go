@@ -1,11 +1,22 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "flag"
+)
 
 type language string
 
+
+
 func main() {
-	greeting := greet("heb")
+    var userLang string
+    //using flag to capture user imput
+    flag.StringVar(&userLang, "lang", "en", "The required language, e.g. en, heb...")
+    // fills all flag occurances with the value provided
+    flag.Parse()
+
+	greeting := greet(language(userLang))
 	fmt.Println(greeting)
 }
 
@@ -25,4 +36,11 @@ func greet(l language) string {
 		return fmt.Sprintf("unsupported language: %q", l)
 	}
 	return greeting
+}
+
+func ErrorMessage() {
+    fmt.Println("Please choose one of the supported languages")
+    for lang, _ := range phrasebook {
+        fmt.Printf("%s\n", lang)
+    }
 }
