@@ -46,6 +46,10 @@ func TestGreet(t *testing.T) {
 			lang:             "vi",
 			expectedGreeting: "Xin chào Thế Giới",
 		},
+        "Italian" :{
+            lang: "itl",
+            expectedGreeting: "Choi",
+        },
 		"Empty": {
 			lang:             "",
 			expectedGreeting: "unsupported language: \"\"",

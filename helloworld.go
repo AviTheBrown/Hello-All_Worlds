@@ -27,6 +27,7 @@ var phrasebook = map[language]string{
 	"heb": "שלום עולם",         // Hebrew
 	"ur":  "ہیلو دنیا",         // Urdu
 	"vi":  "Xin chào Thế Giới", // Vietnamese
+    "itl": "Choi",              // Italian
 }
 
 func greet(l language) string {
