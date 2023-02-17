@@ -10,31 +10,55 @@ import (
 //   // Hello World
 //}
 
-func TestGreet_English(t *testing.T) {
-	lang := "en"
-	expectedGreeting := "Hello World"
-	greeting := greet(language(lang))
-	if greeting != expectedGreeting {
-		// mark this a failed
-		t.Errorf("expected %q, got: %q", expectedGreeting, greeting)
+func TestGreet(t *testing.T) {
+	// prep phase
+	type scenario struct {
+		lang             language
+		expectedGreeting string
 	}
-}
-func TestGreet_French(t *testing.T) {
-	lang := "fr"
-	expectedGreeting := "Bonjour le monde"
-	greeting := greet(language(lang))
+	var tests = map[string]scenario{
 
-	if expectedGreeting != greeting {
-		t.Errorf("expected: %q, got: %q", expectedGreeting, greeting)
+		"English": {
+			lang:             "en",
+			expectedGreeting: "Hello World",
+		},
+		"French": {
+			lang:             "fr",
+			expectedGreeting: "Bonjor le monde",
+		},
+		"Akkadian, not supported": {
+			lang:             "akk",
+			expectedGreeting: "unsupported language: \"akk\"",
+		},
+		"Greek": {
+			lang:             "el",
+			expectedGreeting: "Χαίρετε Κόσμε",
+		},
+		"Hebrew": {
+			lang:             "heb",
+			expectedGreeting: "שלום עולם",
+		},
+		"Urdu": {
+			lang:             "ur",
+			expectedGreeting: "ہیلو دنیا",
+		},
+		"Vietnamese": {
+			lang:             "vi",
+			expectedGreeting: "Xin chào Thế Giới",
+		},
+		"Empty": {
+			lang:             "",
+			expectedGreeting: "unsupported language: \"\"",
+		},
 	}
-}
-
-func TestGreeting_Hebrew(t *testing.T) {
-	lang := "heb"
-	expectedGreeting := "Shalom Olam"
-	greeting := greet(language(lang))
-
-	if expectedGreeting != greeting {
-		t.Errorf("expected: %q, got: %q", expectedGreeting, greeting)
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			// execution phase call function
+			greeting := greet(tc.lang)
+			// decision phase
+			if greeting != tc.expectedGreeting {
+				t.Errorf("expected: %q, got: %q", tc.expectedGreeting, greeting)
+			}
+		})
 	}
 }
